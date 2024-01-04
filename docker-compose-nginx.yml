@@ -64,9 +64,7 @@ services:
     image: getmeili/meilisearch:latest
     container_name: ${DOMAINNAME}-meilisearch
     volumes:
-      - ./meilisearch/data:/var/lib/meilisearch/data
-      - ./meilisearch/dumps:/var/lib/meilisearch/dumps
-      - ./meilisearch/snapshots:/var/lib/meilisearch/snapshots
+      - ./meilisearch:/meili_data
     ports:
       - "7700:7700"
     environment:
