@@ -275,7 +275,7 @@ if [[ $? -eq 0 ]]; then
     sed -i 's/MYSQL_USER=/&'$db_user'/' .env
     sed -i 's:MYSQL_PASSWORD=:&'$db_user_pw':' .env
     sed -i 's/DOMAINNAME=/&'$domainname'/' .env
-    sed -i 's/MASTER_KEY=/&'$meili_master_key'/' .env
+    sed -i 's:MASTER_KEY=:&'$meili_master_key':' .env
     sed -i '/server_name/c\    server_name '$domainname';' ./nginx/default
     sed -i 's/HOST_ROOT_DIR=/&'$host_root_dir'/' .env
     sed -i 's:CUR_DIR=:&'$PWD':' .env
