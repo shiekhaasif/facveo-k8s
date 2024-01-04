@@ -50,7 +50,7 @@ services:
     ports:
         - "9001:9001"
     depends_on:
-      - faveo-apache
+      - faveo-nginx
       - faveo-mariadb
       - faveo-redis
       - faveo-meilisearch
