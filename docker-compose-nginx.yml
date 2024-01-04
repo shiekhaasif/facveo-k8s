@@ -1,7 +1,7 @@
 version: '3'
 services:
   faveo-nginx:
-    image: tamilselvanlws/ubuntu-nginx-php8.1:v1
+    image: tamilselvanlws/faveo-nginx-php8.2:v1
     container_name: ${DOMAINNAME}-nginx
     networks:
       faveo-network:
@@ -43,20 +43,49 @@ services:
     restart: always
 
   faveo-supervisor:
-    image: tamilselvanlws/ubuntu-supervisor:v1.1
+    image: tamilselvanlws/faveo-supervisor-php8.2:v1
     container_name: ${DOMAINNAME}-supervisor
     volumes:
       - ./${HOST_ROOT_DIR}/:/var/www/html/
     ports:
         - "9001:9001"
     depends_on:
-      - faveo-nginx
+      - faveo-apache
       - faveo-mariadb
       - faveo-redis
+      - faveo-meilisearch
+      - faveo-memcached
     networks:
       faveo-network:
         ipv4_address: 172.24.2.4
     restart: on-failure
+
+  faveo-meilisearch:
+    image: getmeili/meilisearch:latest
+    container_name: ${DOMAINNAME}-meilisearch
+    volumes:
+      - ./meilisearch/data:/var/lib/meilisearch/data
+      - ./meilisearch/dumps:/var/lib/meilisearch/dumps
+      - ./meilisearch/snapshots:/var/lib/meilisearch/snapshots
+    ports:
+      - "7700:7700"
+    environment:
+      - MEILI_ENV=production
+      - MEILI_MASTER_KEY=${MASTER_KEY}
+    networks:
+      faveo-network:
+        ipv4_address: 172.24.2.5
+    restart: always
+
+  faveo-memcached:
+    image: memcached:latest
+    container_name: ${DOMAINNAME}-memcached
+    ports:
+      - "11211:11211"
+    networks:
+      faveo-network:
+        ipv4_address: 172.24.2.6
+    restart: always
 
 volumes:
   db-volume:
