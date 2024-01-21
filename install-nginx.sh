@@ -1,5 +1,18 @@
 #!/bin/bash
 
+# Colour variables for the script.
+red=`tput setaf 1`
+
+green=`tput setaf 2`
+
+yellow=`tput setaf 11`
+
+skyblue=`tput setaf 14`
+
+white=`tput setaf 15`
+
+reset=`tput sgr0`
+
 # Faveo Banner.
 
 echo -e "$skyblue                                                                                                                    $reset"
@@ -290,7 +303,7 @@ fi
 
 docker network rm ${domainname}-faveo
 
-docker network create ${domainname}-faveo --driver=bridge --subnet=172.24.2.0/16
+docker network create --driver=bridge --subnet=192.168.0.0/24 ${domainname}-faveo
 
 if [[ $? -eq 0 ]]; then
     echo " Faveo Docker Network ${domainname}-faveo Created"
