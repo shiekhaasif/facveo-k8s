@@ -304,7 +304,7 @@ fi
 
 docker network rm ${domainname}-faveo
 
-docker network create --driver=bridge --subnet=172.24.0.0/24 ${domainname}-faveo
+docker network create --driver=bridge --subnet=172.24.2.0/24 ${domainname}-faveo
 
 if [[ $? -eq 0 ]]; then
     echo " Faveo Docker Network ${domainname}-faveo Created"
@@ -318,7 +318,6 @@ if [[ $? -eq 0 ]]; then
     cp docker-compose-apache.yml docker-compose.yml
     docker-compose up -d
 fi
-
 
 # Faveo credentials
 if [[ $? -eq 0 ]]; then
